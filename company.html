@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="cont shadow my-5 p-3 rounded w-75">
+        <div class="d-flex align-items-center justify-content-center">
+        <div id="loader" class="align-self-center mt-2" role="status"></div>
+        </div>
+    <div id="profile" class="profile mx-5">
+        <div class="d-flex align-items-center">
+            <div class="test">
+        <a href="" id="companyLink">
+            <img id="image" class="w-50 ms-2"></img>
+        </a>  
+        </div>
+        <div id="nameC"></div>
+        <div id="sector" class="sector ms-2"></div>
+       
+        </div>
+        <div class="d-flex flex-row pb-3 my-3">
+            <div id="stockPrice" class="fs-5"></div>
+            <div id="pChange" class="ms-2 fs-5"></div>
+            </div>
+        <p>
+            <button class="go ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#description" aria-expended="false" aria-controls="description">Read About The Company</button>
+        </p>
+            
+         <div  class="card card-body border border-0">
+            <div class="collapse" id="description"></div>
+         </div>
+        
+    </div>
+        <canvas id="myChart" class="mx-5"style="width:100%"></canvas>
+         <div class="d-flex justify-content-center my-4">
+            
+    <button class="go shadow border-0" onclick="history.back()">Go Back</button>
+    </div>
+    </div>
+   
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./company.js"></script>
+</body>
+</html>
