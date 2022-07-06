@@ -27,11 +27,13 @@
   border: none;
 }
 
-.cont,
+.cont{
+  margin: 0% 25%;
+}
+
 .boxe {
   margin: 0% 12.5%;
 }
-
 #nameC,
 #sector {
   font-size: 20px;
@@ -43,16 +45,16 @@
   margin-right: 1rem;
 }
 
-.name {
-  margin-right: 5rem;
-}
 
 #loader {
   background-color: rgb(0, 250, 154);
 }
+.first-row {
+  margin-left: -1.3rem;
+}
 
-.test {
-  margin-right: -3rem;
+.name-sector {
+  margin-left: -3.5rem;
 }
 
 .marquee {
@@ -65,9 +67,9 @@
   animation-play-state: paused;
 }
 #inside {
-  -moz-animation: marquee 20s linear infinite;
-  -webkit-animation: marquee 20s linear infinite;
-  animation: marquee 20s linear infinite;
+  -moz-animation: marquee 30s linear infinite;
+  -webkit-animation: marquee 30s linear infinite;
+  animation: marquee 30s linear infinite;
   animation-iteration-count: infinite;
   white-space: wrap;
 
