@@ -7,27 +7,32 @@ const stockPrice = document.getElementById("stockPrice");
 const pChange = document.getElementById("pChange");
 const sector = document.getElementById("sector");
 const loader = document.getElementById("loader");
-let myMarquee = document.getElementById("inside")
 
-function marquee (){
-    fetch(`https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`)
-    .then (response => response.json())
-    .then (data =>{
-        let spans = "";
-        for (let i=0; i<data.length; i++){
-          let cP = parseFloat(data[i].changesPercentage).toFixed(2)
-            if (cP>=0){
-            spans += `<span class="symb text-dark">${data[i].symbol}</span><span class="percent text-success"> (+${cP}%)</span>`;
-        }else{
-            spans += `<span class="symb text-dark">${data[i].symbol}</span><span class="percent text-danger"> (${cP}%)</span>`;
-        }
-    }
-    myMarquee.innerHTML = spans
-    })
-    return myMarquee;
-    }
-    marquee()
-    
+
+
+class marqueeClass {
+  constructor(spans) {
+      this.spans = spans;
+  }
+  
+ async load() {
+  const response = await fetch (`https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`);
+  const data = await response.json();
+  
+  for (let i=0; i<100; i++){
+              this.spans.innerHTML += `<span class="symb text-dark">${data[i].symbol}</span><span class="text-success percent"> ($${data[i].price})</span>`;
+          }
+      }
+ }
+
+async function marquee() {
+  const myMarquee = document.getElementById("inside")
+  let myMarquee2 = new marqueeClass(myMarquee);
+  await myMarquee2.load();
+}
+
+marquee();
+
 
 async function companyProfile(symbol) {
     loader.classList.add("spinner-grow");
