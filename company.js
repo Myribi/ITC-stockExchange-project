@@ -8,34 +8,33 @@ const pChange = document.getElementById("pChange");
 const sector = document.getElementById("sector");
 const loader = document.getElementById("loader");
 
-
-
 class marqueeClass {
   constructor(spans) {
-      this.spans = spans;
+    this.spans = spans;
   }
-  
- async load() {
-  const response = await fetch (`https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`);
-  const data = await response.json();
-  
-  for (let i=0; i<100; i++){
-              this.spans.innerHTML += `<span class="symb text-dark">${data[i].symbol}</span><span class="text-success percent"> ($${data[i].price})</span>`;
-          }
-      }
- }
+
+  async load() {
+    const response = await fetch(
+      `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`
+    );
+    const data = await response.json();
+
+    for (let i = 0; i < 100; i++) {
+      this.spans.innerHTML += `<span class="symb text-dark">${data[i].symbol}</span><span class="text-success percent"> ($${data[i].price})</span>`;
+    }
+  }
+}
 
 async function marquee() {
-  const myMarquee = document.getElementById("inside")
+  const myMarquee = document.getElementById("inside");
   let myMarquee2 = new marqueeClass(myMarquee);
   await myMarquee2.load();
 }
 
 marquee();
 
-
 async function companyProfile(symbol) {
-    loader.classList.add("spinner-grow");
+  loader.classList.add("spinner-grow");
   try {
     let url1 = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`;
     const response = await fetch(url1);
@@ -55,7 +54,7 @@ function displayProfile(profile) {
   description.innerText = profile.description;
   stockPrice.innerText = `Stock price: $${profile.price}`;
   sector.innerText = `(${profile.sector})`;
-  let pCP = parseFloat(profile.changesPercentage).toFixed(2)
+  let pCP = parseFloat(profile.changesPercentage).toFixed(2);
   pChange.innerText = `(${pCP}%)`;
   if (profile.changesPercentage.includes("-")) {
     pChange.style.color = "red";

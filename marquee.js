@@ -1,12 +1,9 @@
 class Marquee {
   constructor(spans) {
-    
     this.spans = spans;
-
   }
 
   async load(companies) {
-
     const response = await fetch(
       `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`
     );
@@ -17,7 +14,3 @@ class Marquee {
     }
   }
 }
-
-
-
-

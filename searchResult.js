@@ -1,70 +1,72 @@
 class SearchResult {
-  constructor(results) {
-    this.results = results;
+  constructor(element) {
+    this.element = element;
   }
 
-  renderResults(companies) {
-	this.createHtml2();
+  async renderResults(companies) {
+    this.createHtml2();
+    let search = document.getElementById("search");
     let ol = document.createElement("ol");
-	
-	let history = document.getElementById("results");
     ol.setAttribute("id", "historyList");
-    history.innerHTML = "";
+    this.element.innerHTML = " ";
     for (let i of companies) {
       let li = document.createElement("li");
-      this.companyProfile(i.symbol).then(function (response) {
-        let imageUrl = response.profile.image;
-        let pChange = parseFloat(response.profile.changesPercentage).toFixed(2);
+      li.setAttribute("id", "lines");
+      const response = await this.companyProfile(i.symbol);
+      let imageUrl = response.profile.image;
+      let pChange = parseFloat(response.profile.changesPercentage).toFixed(2);
 
+      let highlightedName = response.profile.companyName.replace(
+        new RegExp(search.value, "gi"),
+        (matchName) => `<mark class="text-dark">${matchName}</mark>`
+      );
+      let highlightedSymbol = response.symbol.replace(
+        new RegExp(search.value, "gi"),
+        (matchSymbol) => `<mark class="text-dark">${matchSymbol}</mark>`
+      );
+
+      if (search.value.length > 1) {
         li.innerHTML = `<img class="logos" src=${imageUrl}>`;
-        li.innerHTML += `<a class="text-decoration-none d-flex align-items-center" href = "/company.html?symbol=${i.symbol}"> <div class="name">${i.name}</div> <div class="parentesis text-secondary fs-6">(${i.symbol})</div></a> `;
+        li.innerHTML += `<a class="text-decoration-none d-flex align-items-center" href = "/company.html?symbol=${i.symbol}"> <div id="name" class="name">${highlightedName}</div> <div id="symbol" class="parentesis text-secondary fs-6">(${highlightedSymbol})</div></a> `;
+      } else {
+        li.innerHTML = `<img class="logos" src=${imageUrl}>`;
+        li.innerHTML += `<a class="text-decoration-none d-flex align-items-center" href = "/company.html?symbol=${i.symbol}"> <div id="name" class="name">${i.name}</div> <div id="symbol" class="parentesis text-secondary fs-6">(${i.symbol})</div></a> `;
+      }
 
-        if (pChange < 0) {
-          li.innerHTML += `<div class="text-danger fs-6" >(${pChange}%)</div>`;
-        } else {
-          li.innerHTML += `<div class="text-success fs-6" >(+${pChange}%)</div>`;
-        }
+      if (pChange < 0) {
+        li.innerHTML += `<div class="text-danger fs-6" >(${pChange}%)</div>`;
+      } else {
+        li.innerHTML += `<div class="text-success fs-6" >(+${pChange}%)</div>`;
+      }
 
-        ol.classList.add("list-unstyled", "pad");
-        li.classList.add(
-          "fs-5",
-          "border-bottom",
-          "py-2",
-          "d-flex",
-          "align-items-center",
-		  "list"
-        );
+      ol.classList.add("list-unstyled", "pad");
+      li.classList.add(
+        "fs-5",
+        "border-bottom",
+        "py-2",
+        "d-flex",
+        "align-items-center",
+        "list"
+      );
 
-        ol.appendChild(li);
-        history.appendChild(ol);
-      });
+      ol.appendChild(li);
+      this.element.appendChild(ol);
     }
   }
 
   async companyProfile(symbol) {
-	try {
-	let url2 = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`;
-	const response = await fetch(url2);
-	const data = response.json();
-	return data;
-	} catch (err) {
-		console.log('error: ', err); 
-	}
-  
+    try {
+      let url2 = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`;
+      const response = await fetch(url2);
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      console.log("error: ", err);
+    }
   }
 
-createHtml2 () {
-	const loaderDiv = document.getElementById("loaderDiv")
-	
-// let history = document.createElement("div")
-// history.setAttribute("id", "history")
-// history.classList.add("d-flex", "justify-content-center", "pb-4")
-
-loaderDiv.appendChild(results)
-
+  createHtml2() {
+    const loaderDiv = document.getElementById("loaderDiv");
+    loaderDiv.appendChild(results);
+  }
 }
-
-}
-
-
-
